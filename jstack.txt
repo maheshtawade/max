@@ -1,0 +1,62 @@
+[root@LSIPRODAPP12 bin]# ./jstack -l 11119 > /home/infra.mg/threadump_220922.txt
+11119: Unable to open socket file: target process not responding or HotSpot VM not loaded
+The -F option can be used when the target process is not responding
+[root@LSIPRODAPP12 bin]#
+[root@LSIPRODAPP12 bin]#
+[root@LSIPRODAPP12 bin]# ps -ef | grep 11119
+root      6716  4550  0 16:17 pts/2    00:00:00 grep --color=auto 11119
+arshad   11119 11016  8 Sep21 ?        02:13:10 /usr/java/jdk1.7.0_51/bin/java -D[Standalone] -server -XX:+UseCompressedOops -verbose:gc -Xloggc:/home/indus.admin/AppServer/jboss-eap-6.3/server/8880/standalone/log/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=3M -XX:-TraceClassUnloading -Xms1024m -Xmx2048m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true -Djboss.modules.policy-permissions=true -Dorg.jboss.as.logging.per-deployment=false -Dorg.jboss.boot.log.file=/home/indus.admin/AppServer/jboss-eap-6.3/server/8880/standalone/log/server.log -Dlogging.configuration=file:/home/indus.admin/AppServer/jboss-eap-6.3/server/8880/standalone/configuration/logging.properties -jar /home/indus.admin/AppServer/jboss-eap-6.3/jboss-modules.jar -mp /home/indus.admin/AppServer/jboss-eap-6.3/modules -jaxpmodule javax.xml.jaxp-provider org.jboss.as.standalone -Djboss.home.dir=/home/indus.admin/AppServer/jboss-eap-6.3 -Djboss.server.base.dir=/home/indus.admin/AppServer/jboss-eap-6.3/server/8880/standalone -Djboss.server.base.dir=/home/indus.admin/AppServer/jboss-eap-6.3/server/8880/standalone -c standalone-full.xml -b LSIPRODAPP12
+[root@LSIPRODAPP12 bin]#
+[root@LSIPRODAPP12 bin]# ./jstack -l -F 11119 > /home/infra.mg/threadump_220922-v2.txt
+Attaching to process ID 11119, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 24.51-b03
+sun.jvm.hotspot.debugger.DebuggerException: sun.jvm.hotspot.debugger.DebuggerException: get_thread_regs failed for a lwp
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal$LinuxDebuggerLocalWorkerThread.execute(LinuxDebuggerLocal.java:152)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal.getThreadIntegerRegisterSet(LinuxDebuggerLocal.java:466)
+        at sun.jvm.hotspot.debugger.linux.LinuxThread.getContext(LinuxThread.java:65)
+        at sun.jvm.hotspot.runtime.linux_amd64.LinuxAMD64JavaThreadPDAccess.getCurrentFrameGuess(LinuxAMD64JavaThreadPDAccess.java:93)
+        at sun.jvm.hotspot.runtime.JavaThread.getCurrentFrameGuess(JavaThread.java:256)
+        at sun.jvm.hotspot.runtime.JavaThread.getLastJavaVFrameDbg(JavaThread.java:218)
+        at sun.jvm.hotspot.tools.StackTrace.run(StackTrace.java:76)
+        at sun.jvm.hotspot.tools.StackTrace.run(StackTrace.java:45)
+        at sun.jvm.hotspot.tools.JStack.run(JStack.java:60)
+        at sun.jvm.hotspot.tools.Tool.start(Tool.java:221)
+        at sun.jvm.hotspot.tools.JStack.main(JStack.java:86)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:606)
+        at sun.tools.jstack.JStack.runJStackTool(JStack.java:136)
+        at sun.tools.jstack.JStack.main(JStack.java:102)
+Caused by: sun.jvm.hotspot.debugger.DebuggerException: get_thread_regs failed for a lwp
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal.getThreadIntegerRegisterSet0(Native Method)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal.access$800(LinuxDebuggerLocal.java:51)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal$1GetThreadIntegerRegisterSetTask.doit(LinuxDebuggerLocal.java:460)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal$LinuxDebuggerLocalWorkerThread.run(LinuxDebuggerLocal.java:127)
+sun.jvm.hotspot.debugger.DebuggerException: sun.jvm.hotspot.debugger.DebuggerException: get_thread_regs failed for a lwp
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal$LinuxDebuggerLocalWorkerThread.execute(LinuxDebuggerLocal.java:152)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal.getThreadIntegerRegisterSet(LinuxDebuggerLocal.java:466)
+        at sun.jvm.hotspot.debugger.linux.LinuxThread.getContext(LinuxThread.java:65)
+        at sun.jvm.hotspot.runtime.linux_amd64.LinuxAMD64JavaThreadPDAccess.getCurrentFrameGuess(LinuxAMD64JavaThreadPDAccess.java:93)
+        at sun.jvm.hotspot.runtime.JavaThread.getCurrentFrameGuess(JavaThread.java:256)
+        at sun.jvm.hotspot.runtime.JavaThread.getLastJavaVFrameDbg(JavaThread.java:218)
+        at sun.jvm.hotspot.tools.StackTrace.run(StackTrace.java:76)
+        at sun.jvm.hotspot.tools.StackTrace.run(StackTrace.java:45)
+        at sun.jvm.hotspot.tools.JStack.run(JStack.java:60)
+        at sun.jvm.hotspot.tools.Tool.start(Tool.java:221)
+        at sun.jvm.hotspot.tools.JStack.main(JStack.java:86)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:606)
+        at sun.tools.jstack.JStack.runJStackTool(JStack.java:136)
+        at sun.tools.jstack.JStack.main(JStack.java:102)
+Caused by: sun.jvm.hotspot.debugger.DebuggerException: get_thread_regs failed for a lwp
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal.getThreadIntegerRegisterSet0(Native Method)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal.access$800(LinuxDebuggerLocal.java:51)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal$1GetThreadIntegerRegisterSetTask.doit(LinuxDebuggerLocal.java:460)
+        at sun.jvm.hotspot.debugger.linux.LinuxDebuggerLocal$LinuxDebuggerLocalWorkerThread.run(LinuxDebuggerLocal.java:127)
+[root@LSIPRODAPP12 bin]#
+LSIPRODAPP12
